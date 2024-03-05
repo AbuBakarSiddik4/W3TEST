@@ -21,7 +21,7 @@ const AdminDashboard = () => {
     }, [])
     return (
         <Box>
-            <Typography>User History</Typography>
+            <Typography style={{ color: "#6b6bf5", fontSize: "20px",fontWeight:700 }}>User History</Typography>
             <Table size='small' stickyHeader>
                 <TableHead>
                     <TableRow>

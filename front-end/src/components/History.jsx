@@ -14,6 +14,7 @@ const formatdate = (date) => {
 
 const History = () => {
     const [history, setHistory] = useState([]);
+
     useEffect(() => {
         const fetch = async () => {
             const endPoint = import.meta.env.VITE_USER;
@@ -32,7 +33,7 @@ const History = () => {
     }, []);
     return (
         <Box>
-            <Typography>Request History</Typography>
+            <Typography style={{ color: "#6b6bf5", fontSize: "20px",fontWeight:700 }}>Request History</Typography>
             <Table size='small' stickyHeader>
                 <TableHead>
                     <TableRow>

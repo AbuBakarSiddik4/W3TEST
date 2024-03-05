@@ -1,9 +1,11 @@
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { jwtDecode } from "jwt-decode";
 
 import User from "../models/user.js";
 import { JWTKEY } from "../secret.js";
 import successResponse from "../utils/response.js";
+
 
 export const signup = async (req, res, next) => {
   const { email, password } = req.body;
@@ -60,17 +62,16 @@ export const login = async (req, res, next) => {
         email: userWithoutPassword.email,
         isAdmin: userWithoutPassword.isAdmin,
       },
-      JWTKEY,{
-        expiresIn: '10h',
+      JWTKEY,
+      {
+        expiresIn: "10h",
       }
     );
     res.cookie("token", token);
-    return successResponse(
-      res,
-      200,
-      "Sucessfully Created User",
-      {user:userWithoutPassword,acess_token:token}
-    );
+    return successResponse(res, 200, "Sucessfully Created User", {
+      user: userWithoutPassword,
+      acess_token: token,
+    });
   } catch (error) {
     next(error);
   }
@@ -80,6 +81,39 @@ export const logout = async (req, res, next) => {
   try {
     res.clearCookie("token");
     return successResponse(res, 200, "Log out Successful");
+  } catch (error) {
+    next(error);
+  }
+};
+
+export const google = async (req, res, next) => {
+  try {
+    const {response} = req.body;
+    const decoded = jwtDecode(response.credential);
+    const email = decoded.email;
+    const password = decoded.sub;
+    let user = await User.findOne({ email : email });
+    if(!user) {
+      const hashPassword = bcrypt.hashSync(password, 10);
+      user = new User({ email: email, password: hashPassword });
+      await user.save();
+    }
+    const token = await jwt.sign(
+      {
+        id: user._id,
+        email: user.email,
+        isAdmin: user.isAdmin,
+      },
+      JWTKEY,
+      {
+        expiresIn: "10h",
+      }
+    );
+    res.cookie("token", token);
+    return successResponse(res, 200, "Sucessfully Created User", {
+      user: user,
+      acess_token: token,
+    });
   } catch (error) {
     next(error);
   }

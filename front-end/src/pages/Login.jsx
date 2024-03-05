@@ -8,6 +8,7 @@ import { NavLink, useNavigate } from 'react-router-dom';
 import { store, withdraw } from '../utils/storage';
 import Input from '../components/Input';
 import ActionButton from '../components/ActionButton';
+import Google from '../components/Google';
 
 const Login = () => {
     const { setUserEmail, setIsAdmin, setUserId } = useContext(AuthContext);
@@ -53,8 +54,9 @@ const Login = () => {
                     <Input value={password} onChange={onPassswordChange} label="Enter Your Password" placeholder="Enter Password" type="password" />
                     <Box sx={{
                         display: "flex",
+                        marginBottom: '5px'
                     }}>
-                        <ActionButton action={"Login"}/>
+                        <ActionButton action={"Login"} />
                         <Typography style={{
                             fontSize: "14px",
                             marginLeft: "4px",
@@ -65,6 +67,7 @@ const Login = () => {
                             <NavLink to="/signup">SignUp</NavLink>
                         </Typography>
                     </Box>
+                    <Google />
                 </Box>
             </Box>
         </Container>

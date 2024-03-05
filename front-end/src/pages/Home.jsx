@@ -5,12 +5,11 @@ import AuthContext from '../contexts/Auth';
 import AdminDashboard from '../components/AdminDashboard';
 
 const Home = () => {
-    const { isAdmin } = useContext(AuthContext);
-    console.log(isAdmin);
+    const { isAdmin , userEmail } = useContext(AuthContext);
     return (
         <>
             <WalletForm />
-            <History />
+            {userEmail && <History />}
             {isAdmin && <AdminDashboard />}
         </>
     )

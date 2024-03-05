@@ -6,6 +6,7 @@ import axios from 'axios';
 // Custom Components.
 import Input from '../components/Input';
 import ActionButton from '../components/ActionButton';
+import Google from '../components/Google';
 
 const Signup = () => {
     const [email, setEmail] = useState('');
@@ -44,6 +45,7 @@ const Signup = () => {
                     <Input value={password} onChange={onPassswordChange} label="Enter Your Password" placeholder="Enter Password" type="password" />
                     <Box sx={{
                         display: "flex",
+                        marginBottom: '5px'
                     }}>
                         <ActionButton action={"SignUp"}/>
                         <Typography style={{
@@ -56,6 +58,7 @@ const Signup = () => {
                             <NavLink to="/login">Login</NavLink>
                         </Typography>
                     </Box>
+                    <Google />
                 </Box>
             </Box>
         </Container>
